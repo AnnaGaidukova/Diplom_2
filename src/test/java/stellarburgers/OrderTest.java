@@ -2,19 +2,20 @@ package stellarburgers;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.apache.http.HttpStatus.*;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class OrderTest {
     private UserSteps userSteps;
     private OrderStep orderStep;
     private User user;
-    private User userLogin;
+   // private User userLogin;
     private String accessToken;
 
     @Before
@@ -22,12 +23,12 @@ public class OrderTest {
         user = CreateRandomUser.random();
         userSteps = new UserSteps();
         orderStep = new OrderStep();
-        userLogin = new User();
+       // userLogin = new User();
     }
     @After
     public void cleanUp() {
         if (accessToken != null) {
-            userSteps.deleteUser(accessToken);
+            userSteps.deleteUser(user);
         }
     }
     @Test
@@ -47,7 +48,10 @@ public class OrderTest {
         userSteps.createUser(user);
         ValidatableResponse response = userSteps.loginUser(user);
         accessToken = response.extract().path("accessToken").toString();
+       //Response badOrders =  badOrders
         orderStep.createOrderAuthorizedUserWithInvalidHash(accessToken);
+        response
+                .assertThat().statusCode(SC_INTERNAL_SERVER_ERROR);
     }
     @Test
     @DisplayName("Create order with authorized user")
@@ -58,7 +62,7 @@ public class OrderTest {
         accessToken = response.extract().path("accessToken").toString();
         orderStep.createOrderAuthorizedUser(accessToken);
         response
-        .statusCode(SC_OK)
+                .statusCode(SC_OK)
                 .and()
                 .assertThat().body("success", is(true));
     }
@@ -69,6 +73,10 @@ public class OrderTest {
         userSteps.createUser(user);
         ValidatableResponse response = userSteps.loginUser(user);
         accessToken = response.extract().path("accessToken").toString();
-        orderStep.createOrderAuthorizedUserWithoutIngredients(accessToken);
+        ValidatableResponse emptyOrder = orderStep.createOrderAuthorizedUserWithoutIngredients(accessToken);
+        emptyOrder
+                .assertThat().statusCode(SC_BAD_REQUEST)
+                .and()
+                .assertThat().body("success", is(false));
     }
 }

@@ -7,16 +7,14 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
+
 
 public class UserUpgradeTest {
     private User user;
     private User userForUpdate;
     private UserSteps userSteps;
-    private String accessToken;
 
     @Before
     public void setUser() {
@@ -26,9 +24,7 @@ public class UserUpgradeTest {
     }
     @After
     public void cleanUp() {
-        if (accessToken != null) {
-            userSteps.deleteUser(accessToken);
-        }
+            userSteps.deleteUser(user);
     }
     @Test
     @DisplayName("Check Update Data Registered User")

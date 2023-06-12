@@ -13,22 +13,18 @@ import static org.apache.http.HttpStatus.*;
 public class GetOrderTest {
     private UserSteps userSteps;
     private OrderStep orderStep;
-    private User user;
-    private User userLogin;
+    private User user;                         //private User userLogin;
     private String accessToken;
 
     @Before
     public void setOrder() {
         user = CreateRandomUser.random();
         userSteps = new UserSteps();
-        orderStep = new OrderStep();
-        userLogin = new User();
+        orderStep = new OrderStep();         //  userLogin = new User();
     }
     @After
     public void cleanUp() {
-        if (accessToken != null) {
-            userSteps.deleteUser(accessToken);
-        }
+            userSteps.deleteUser(user);
     }
     @Test
     @DisplayName("Check Get User Order With Authorization")

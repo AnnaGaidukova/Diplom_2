@@ -34,11 +34,10 @@ public class OrderStep extends Config {
                 .spec(getSpecification())
                 .header("Authorization", accessToken)
                 .when()
-                .body("{\n\"ingredients\": [\"91c0c5a71d1f821001bdaa1a6d\"," +
-                        "\"91c0c5a71d1f82001bda1aa70\"]\n}")
+                .body("{\n\"ingredients\": [\"9trytr\"," +
+                        "\"61c070\",\"61c0a73\"]\n}")
                 .post(CREATE_ORDER)
                 .then().log().all();
-
     }
     @Step("Create order without ingredients")
     public ValidatableResponse createOrderAuthorizedUserWithoutIngredients(String accessToken) {

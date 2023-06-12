@@ -22,9 +22,9 @@ public class UserTest {
     }
     @After
     public void cleanUp() {
-        if (accessToken != null) {
-            userSteps.deleteUser(accessToken);
-        }
+
+            userSteps.deleteUser(user);
+
     }
         @Test
         @DisplayName("Check create user")

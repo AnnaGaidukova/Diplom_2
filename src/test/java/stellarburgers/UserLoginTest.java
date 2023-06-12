@@ -11,21 +11,14 @@ import static org.apache.http.HttpStatus.*;
 public class UserLoginTest {
     private User user;
     private UserSteps userSteps;
-    private User userLogin;
-    private String accessToken;
-
     @Before
     public void setUser() {
         user = CreateRandomUser.random();
         userSteps = new UserSteps();
-        userLogin = new User();
-        userSteps.loginUser(userLogin);
     }
     @After
     public void cleanUp() {
-        if (accessToken != null) {
-            userSteps.deleteUser(accessToken);
-        }
+            userSteps.deleteUser(user);
     }
     @Test
     @DisplayName("Check Correct Authorization")
