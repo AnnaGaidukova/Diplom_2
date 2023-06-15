@@ -14,7 +14,7 @@ public class GetOrderTest {
     private UserSteps userSteps;
     private OrderStep orderStep;
     private User user;                         //private User userLogin;
-    private String accessToken;
+    //private String accessToken;
 
     @Before
     public void setOrder() {
@@ -24,7 +24,7 @@ public class GetOrderTest {
     }
     @After
     public void cleanUp() {
-            userSteps.deleteUser(user);
+            userSteps.deleteUser(user.getToken());
     }
     @Test
     @DisplayName("Check Get User Order With Authorization")
@@ -32,7 +32,7 @@ public class GetOrderTest {
     public void checkGetUserOrderWithAuthorization() {
         userSteps.createUser(user);
         ValidatableResponse response = userSteps.loginUser(user);
-        accessToken = response.extract().path("accessToken").toString();
+        String accessToken = response.extract().path("accessToken").toString();
         orderStep.getOrdersWithRegistration(accessToken);
         response
                 .assertThat().body("success", Matchers.is(true))

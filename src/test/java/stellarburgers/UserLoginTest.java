@@ -16,10 +16,6 @@ public class UserLoginTest {
         user = CreateRandomUser.random();
         userSteps = new UserSteps();
     }
-    @After
-    public void cleanUp() {
-            userSteps.deleteUser(user);
-    }
     @Test
     @DisplayName("Check Correct Authorization")
     @Description("Check Correct Authorization. Success checking.")
@@ -74,5 +70,9 @@ public class UserLoginTest {
                 .statusCode(SC_UNAUTHORIZED)
                 .and()
                 .assertThat().body("message", equalTo("email or password are incorrect"));
+    }
+    @After
+    public void cleanUp() {
+        userSteps.deleteUser(user.getToken());
     }
 }

@@ -24,7 +24,7 @@ public class UserUpgradeTest {
     }
     @After
     public void cleanUp() {
-            userSteps.deleteUser(user);
+        userSteps.deleteUser(user.getToken());
     }
     @Test
     @DisplayName("Check Update Data Registered User")

@@ -2,7 +2,6 @@ package stellarburgers;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +12,6 @@ import static org.apache.http.HttpStatus.*;
 public class UserTest {
     private User user;
     private UserSteps userSteps;
-    private String accessToken;
 
     @Before
     public void setUser() {
@@ -22,8 +20,7 @@ public class UserTest {
     }
     @After
     public void cleanUp() {
-
-            userSteps.deleteUser(user);
+            userSteps.deleteUser(user.getToken());
 
     }
         @Test
@@ -31,7 +28,6 @@ public class UserTest {
         @Description("Check create user. Success checking.")
         public void checkCreateUser() {
         ValidatableResponse response = userSteps.createUser(user);
-        accessToken = response.extract().path("accessToken").toString();
         response
                 .statusCode(SC_OK)
                 .and()

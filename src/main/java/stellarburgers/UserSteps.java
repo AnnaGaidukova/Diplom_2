@@ -47,12 +47,12 @@ public class UserSteps extends Config {
                 .then().log().all();
     }
     @Step("Delete user")
-    public ValidatableResponse deleteUser(User user) {
-        return given()
+    public void deleteUser(String accessToken) {
+        given()
                 .spec(getSpecification())
-                .header("Authorization", user.getToken())
+                .header("Authorization", accessToken)
                 .when()
-                .delete(USER_USER + "user")
-                .then().log().all();
+                .delete(USER_USER)
+                .then();
     }
 }

@@ -2,14 +2,14 @@ package stellarburgers;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.response.Response;
+
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.apache.http.HttpStatus.*;
-import static org.hamcrest.CoreMatchers.equalTo;
+
 
 public class OrderTest {
     private UserSteps userSteps;
@@ -28,7 +28,7 @@ public class OrderTest {
     @After
     public void cleanUp() {
         if (accessToken != null) {
-            userSteps.deleteUser(user);
+            userSteps.deleteUser(user.getToken());
         }
     }
     @Test
@@ -49,9 +49,9 @@ public class OrderTest {
         ValidatableResponse response = userSteps.loginUser(user);
         accessToken = response.extract().path("accessToken").toString();
        //Response badOrders =  badOrders
-        orderStep.createOrderAuthorizedUserWithInvalidHash(accessToken);
-        response
-                .assertThat().statusCode(SC_INTERNAL_SERVER_ERROR);
+        orderStep.createOrderAuthorizedUserWithInvalidHash(accessToken)
+                .assertThat()
+                .statusCode(SC_INTERNAL_SERVER_ERROR);
     }
     @Test
     @DisplayName("Create order with authorized user")

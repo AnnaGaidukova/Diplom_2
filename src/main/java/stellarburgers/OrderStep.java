@@ -29,15 +29,14 @@ public class OrderStep extends Config {
                 .then().log().all();
     }
     @Step("Create order with incorrect ingredients")
-    public void createOrderAuthorizedUserWithInvalidHash(String accessToken) {
-        given()
+    public ValidatableResponse createOrderAuthorizedUserWithInvalidHash(String accessToken) {
+        return given()
                 .spec(getSpecification())
                 .header("Authorization", accessToken)
-                .when()
                 .body("{\n\"ingredients\": [\"9trytr\"," +
                         "\"61c070\",\"61c0a73\"]\n}")
                 .post(CREATE_ORDER)
-                .then().log().all();
+                .then();
     }
     @Step("Create order without ingredients")
     public ValidatableResponse createOrderAuthorizedUserWithoutIngredients(String accessToken) {
