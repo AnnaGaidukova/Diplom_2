@@ -32,6 +32,7 @@ public class GetOrderTest {
         userSteps.createUser(user);
         ValidatableResponse response = userSteps.loginUser(user);
         String accessToken = response.extract().path("accessToken").toString();
+        user.setToken(accessToken);
         orderStep.getOrdersWithRegistration(accessToken);
         response
                 .assertThat().body("success", Matchers.is(true))

@@ -46,6 +46,7 @@ public class OrderTest {
         userSteps.createUser(user);
         ValidatableResponse response = userSteps.loginUser(user);
         accessToken = response.extract().path("accessToken").toString();
+        user.setToken(accessToken);
         orderStep.createOrderAuthorizedUserWithInvalidHash(accessToken)
                 .assertThat()
                 .statusCode(SC_INTERNAL_SERVER_ERROR);
@@ -57,6 +58,7 @@ public class OrderTest {
         userSteps.createUser(user);
         ValidatableResponse response = userSteps.loginUser(user);
         accessToken = response.extract().path("accessToken").toString();
+        user.setToken(accessToken);
         orderStep.createOrderAuthorizedUser(accessToken);
         response
                 .statusCode(SC_OK)
@@ -70,6 +72,7 @@ public class OrderTest {
         userSteps.createUser(user);
         ValidatableResponse response = userSteps.loginUser(user);
         accessToken = response.extract().path("accessToken").toString();
+        user.setToken(accessToken);
         ValidatableResponse emptyOrder = orderStep.createOrderAuthorizedUserWithoutIngredients(accessToken);
         emptyOrder
                 .assertThat().statusCode(SC_BAD_REQUEST)
