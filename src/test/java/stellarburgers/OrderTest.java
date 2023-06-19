@@ -10,12 +10,10 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.apache.http.HttpStatus.*;
 
-
 public class OrderTest {
     private UserSteps userSteps;
     private OrderStep orderStep;
     private User user;
-   // private User userLogin;
     private String accessToken;
 
     @Before
@@ -23,7 +21,7 @@ public class OrderTest {
         user = CreateRandomUser.random();
         userSteps = new UserSteps();
         orderStep = new OrderStep();
-       // userLogin = new User();
+
     }
     @After
     public void cleanUp() {
@@ -48,7 +46,6 @@ public class OrderTest {
         userSteps.createUser(user);
         ValidatableResponse response = userSteps.loginUser(user);
         accessToken = response.extract().path("accessToken").toString();
-       //Response badOrders =  badOrders
         orderStep.createOrderAuthorizedUserWithInvalidHash(accessToken)
                 .assertThat()
                 .statusCode(SC_INTERNAL_SERVER_ERROR);

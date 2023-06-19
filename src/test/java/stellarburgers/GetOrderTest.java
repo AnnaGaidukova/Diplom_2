@@ -13,14 +13,13 @@ import static org.apache.http.HttpStatus.*;
 public class GetOrderTest {
     private UserSteps userSteps;
     private OrderStep orderStep;
-    private User user;                         //private User userLogin;
-    //private String accessToken;
+    private User user;
 
     @Before
     public void setOrder() {
         user = CreateRandomUser.random();
         userSteps = new UserSteps();
-        orderStep = new OrderStep();         //  userLogin = new User();
+        orderStep = new OrderStep();
     }
     @After
     public void cleanUp() {
@@ -38,7 +37,6 @@ public class GetOrderTest {
                 .assertThat().body("success", Matchers.is(true))
                 .and().statusCode(SC_OK);
     }
-    //@Description
     @Test
     @DisplayName("Check Get User Order Without Authorization")
     @Description("Check Get User Order Without Authorization. Error checking.")

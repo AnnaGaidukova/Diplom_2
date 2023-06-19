@@ -41,7 +41,7 @@ public class User {
     }
 
     public void setToken(String token) {
-        this.token = token;
+        this.token = token.substring(7);
     }
     public String getToken() {
         return token;

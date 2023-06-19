@@ -50,9 +50,10 @@ public class UserSteps extends Config {
     public void deleteUser(String accessToken) {
         given()
                 .spec(getSpecification())
-                .header("Authorization", accessToken)
+                .auth().oauth2(accessToken)
                 .when()
                 .delete(USER_USER)
-                .then();
+                .then()
+                .assertThat();
     }
 }

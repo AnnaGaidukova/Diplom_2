@@ -10,7 +10,6 @@ import org.junit.Test;
 import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-
 public class UserUpgradeTest {
     private User user;
     private User userForUpdate;
@@ -33,10 +32,10 @@ public class UserUpgradeTest {
         User initialUser = CreateRandomUser.random();
         User userForUpdate = initialUser.clone();
         userForUpdate.setEmail(RandomStringUtils.randomAlphabetic(6) + "@changes.com");
-
         String accessToken = userSteps.createUser(initialUser)
                 .extract()
                 .header("Authorization");
+        user.setToken(accessToken);
         userSteps.updateUser(accessToken, userForUpdate);
         ValidatableResponse updatedUserResponse = userSteps.getDataUser(accessToken);
         updatedUserResponse.body("user.name", equalTo(initialUser.getName()))

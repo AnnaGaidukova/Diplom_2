@@ -22,6 +22,11 @@ public class UserLoginTest {
     public void checkCorrectAuthorization() {
         userSteps.createUser(user);
         ValidatableResponse response = userSteps.loginUser(user);
+        String accessToken = response
+                .extract()
+                .path("accessToken")
+                .toString();
+        user.setToken(accessToken);
         response
                 .statusCode(SC_OK)
                 .and()

@@ -21,13 +21,16 @@ public class UserTest {
     @After
     public void cleanUp() {
             userSteps.deleteUser(user.getToken());
-
     }
         @Test
         @DisplayName("Check create user")
         @Description("Check create user. Success checking.")
         public void checkCreateUser() {
         ValidatableResponse response = userSteps.createUser(user);
+            String accessToken =response
+                    .extract()
+                    .header("Authorization");
+            user.setToken(accessToken);
         response
                 .statusCode(SC_OK)
                 .and()
